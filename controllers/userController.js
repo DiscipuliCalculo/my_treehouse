@@ -1,10 +1,24 @@
 const { body,validationResult } = require('express-validator');
 
+const passport = require('passport')
 const User = require('../models/user');
 const bcrypt = require('bcryptjs')
 const async = require('async');
 
-exports.signup_form_get = function(req, res, next) {
+exports.login_form_get = function(req, res) {
+  res.render('login', {title: 'Login', user: req.user});
+}
+
+/*
+exports.login_form_post = function(req, res) {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login"
+  })
+}
+*/
+
+exports.signup_form_get = function(req, res) {
   res.render('signup', {title: 'Signup'});
 }
 
@@ -12,7 +26,7 @@ exports.signup_form_post = [
 
   body('first_name').trim().isLength({min: 1}).escape().withMessage('Must enter a name').isLength({max: 60}).escape().withMessage('Name is too long'),
   body('last_name').trim().isLength({min: 1}).escape().withMessage('Must enter a name').isLength({max: 60}).escape().withMessage('Name is too long'),
-  body('user').trim().isLength({min: 4}).escape().withMessage('Username must be minimum of 4 characters').isLength({max: 20}).escape().withMessage('Username is too long'),
+  body('username').trim().isLength({min: 4}).escape().withMessage('Username must be minimum of 4 characters').isLength({max: 20}).escape().withMessage('Username is too long'),
   body('password').trim().isLength({min: 4}).escape().withMessage('Password must be minimum of 4 characters').isLength({max: 60}).escape().withMessage('Password is too long'),
   body('password_confirm'.trim()).custom((value, { req }) => {
     if (value !== req.body.password) {
@@ -46,13 +60,13 @@ exports.signup_form_post = [
               {
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
-                user: req.body.user,
+                username: req.body.username,
                 password: hashedPassword,
               }
             )
             user.save(function (err) {
               if (err) {return next(err)}
-              res.redirect('/')
+              res.redirect('/login')
             })
           }
           
@@ -62,3 +76,8 @@ exports.signup_form_post = [
 
   }
 ]
+
+exports.logout_get = function(req, res) {
+  req.logout();
+  res.redirect('/');
+}

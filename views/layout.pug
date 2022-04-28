@@ -4,4 +4,17 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    nav.navbar
+      div
+        h3 Treehouse
+        if user
+          a(class='navlink' href='/') Home
+          a(class='navlink' href='/joinclub') Enter Club
+          a(class='navlink' href='/logout') Logout
+
+        else
+          a(class='navlink' href='/') Home
+          a(class='navlink' href='/signup') Signup
+          a(class='navlink' href='/login') Login
+
     block content

@@ -1,0 +1,14 @@
+extends layout
+
+block content
+
+  h1 #{title}
+
+  form(method="POST" action="")
+    label( for="username") Username: 
+    input( name="username" type="text")
+    label( for="password") Password: 
+    input( name="password" type="passwod")
+    div
+      input( type="submit" value="Submit")
+  

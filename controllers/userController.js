@@ -6,17 +6,32 @@ const bcrypt = require('bcryptjs')
 const async = require('async');
 
 exports.login_form_get = function(req, res) {
-  res.render('login', {title: 'Login', user: req.user});
+  res.render('login', {title: 'Login', user: req.user, messages: req.session.messages});
 }
 
+// Using this code for login hangs the code 
 /*
 exports.login_form_post = function(req, res) {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login"
+  passport.authenticate("local", 
+  {
+  successRedirect: "/",
+  failureRedirect: "/login"
   })
 }
 */
+
+exports.join_form_get = function(req, res) {
+  res.render('join_club', {title: 'Join', user: req.user});
+}
+
+exports.join_form_post = function(req, res) {
+  if ( req.body.text === process.env.CLUB_PASS) {
+    res.render('join_club', {title: 'Join', user: req.user, pass_result: true});
+  }
+  else {
+    res.render('join_club', {title: 'Join', user: req.user, pass_result: false});
+  }
+}
 
 exports.signup_form_get = function(req, res) {
   res.render('signup', {title: 'Signup'});

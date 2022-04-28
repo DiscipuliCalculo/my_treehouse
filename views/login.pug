@@ -4,11 +4,15 @@ block content
 
   h1 #{title}
 
-  form(method="POST" action="")
+  form(method="POST" action="/login/password")
     label( for="username") Username: 
     input( name="username" type="text")
     label( for="password") Password: 
     input( name="password" type="passwod")
+    if messages
+      p #{messages}
     div
       input( type="submit" value="Submit")
-  
+    
+
+

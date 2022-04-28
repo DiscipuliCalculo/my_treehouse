@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 #{title}
+  form( method='POST' action='' )
+    div.form-group
+      label( for="first_name" ) First Name:
+      input( name="first_name" type='text' required="true" value=( undefined===user ? "" : user.first_name) )
+      label( for="last_name" ) Last Name:
+      input( name="last_name" type="text" required="true" value=(undefined===user ? "" : user.last_name) )
+    div.form-group
+      label( for="user" ) Username: 
+      input( name="user" type="text" required="true" value=(undefined===user ? "" : user.user) )
+      label( for="password" ) Password:
+      input( name="password" type="password" required="true" value=(undefined===user ? "" : user.password) )
+    div.form-group
+      labe( for="password_confirm") Confirm Password:
+      input( name="password_confirm" type="password" required="true")
+    input(type="submit" value="Submit")
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

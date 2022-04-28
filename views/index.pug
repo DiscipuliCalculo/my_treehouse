@@ -3,4 +3,19 @@ block content
   h1= title
   p Welcome to #{title}
   if user
-    h4 Hello #{user.username}
+    h3 Hello #{user.username}
+  
+  if user_messages
+
+    if user
+      each message in user_messages
+        h5 #{message.title}
+        p #{message.text}
+        p #{message.user.username}
+
+    else
+      each message in user_messages
+        h5 #{message.title}
+        p #{message.text}
+        p Hidden
+  

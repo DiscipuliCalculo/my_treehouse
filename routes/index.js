@@ -6,9 +6,7 @@ var user_controller = require('../controllers/userController')
 var message_controller = require('../controllers/messageController')
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Home', user: req.user });
-});
+router.get('/', message_controller.list_messages);
 
 router.get('/login', user_controller.login_form_get)
 
@@ -16,7 +14,8 @@ router.post("/login/password", (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
-    failureMessage: true
+    failureMessage: true, 
+    failureFlash: true
   })(req, res, next);
 });
 
@@ -52,6 +51,8 @@ router.post('/joinclub', )
 router.get("/logout", user_controller.logout_get)
 
 router.get('/new_message', message_controller.message_form_get)
+
+router.post('/new_message', message_controller.message_form_post)
 
 
 module.exports = router;

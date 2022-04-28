@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs')
 const async = require('async');
 
 exports.login_form_get = function(req, res) {
-  res.render('login', {title: 'Login', user: req.user, messages: req.session.messages});
+  res.render('login', {title: 'Login', user: req.user, message: req.flash('error')});
 }
 
 // Using this code for login hangs the code 
@@ -53,12 +53,10 @@ exports.signup_form_post = [
 
   function(req, res, next) {
     const error = validationResult(req);
-
     if (!error.isEmpty()) {
       res.render('signup', {title: 'Signup', user: req.body, errors: error.array()} )
       return
     }
-
     User.find({user: req.body.user}, function(err, found){
       if (err) {return next(err)};
       if (found === []) {
@@ -84,11 +82,9 @@ exports.signup_form_post = [
               res.redirect('/login')
             })
           }
-          
         })
       }
     })
-
   }
 ]
 

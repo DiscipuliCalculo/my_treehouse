@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const User = require('./models/user')
 const bcrypt = require('bcryptjs')
+const flash = require('express-flash')
 
 const session = require("express-session");
 const passport = require("passport");
@@ -60,6 +61,8 @@ app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
   next();
 });
+
+app.use(flash());
 
 
 app.use(logger('dev'));

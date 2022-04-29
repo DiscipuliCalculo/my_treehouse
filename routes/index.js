@@ -33,6 +33,7 @@ router.get('/new_message', message_controller.message_form_get)
 
 router.post('/new_message', message_controller.message_form_post)
 
+router.post('/message/delete', message_controller.message_delete)
 
 
 module.exports = router;

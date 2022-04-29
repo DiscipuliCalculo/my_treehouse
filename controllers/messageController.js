@@ -37,10 +37,17 @@ exports.message_form_post = [
 
 exports.list_messages = function(req, res) {
   Message.find({})
-  .sort({timestamp: 1}).
+  .sort({timestamp: -1}).
   populate('user')
   .exec(function (err, message_list) {
     if (err) {return next(err)}
     res.render('index', {title: 'Home', user: req.user, user_messages: message_list})
+  })
+}
+
+exports.message_delete = function(req, res) {
+  Message.findByIdAndDelete(req.body.messageId, function(err){
+    if (err) {return next(err)}
+    res.redirect('/')
   })
 }

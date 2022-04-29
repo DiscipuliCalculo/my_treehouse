@@ -1,5 +1,6 @@
 extends layout
 block content
+  
   h1= title
   p Welcome to #{title}
   if user
@@ -8,14 +9,33 @@ block content
   if user_messages
 
     if user
-      each message in user_messages
-        h5 #{message.title}
-        p #{message.text}
-        p #{message.user.username}
+      if user.admin = true 
+
+        each message in user_messages
+          div.message-container
+            h5 #{message.title}
+            p #{message.text}
+            span
+              p #{message.user.username}
+              p #{message.timestamp}
+
+      
+      else
+      
+        each message in user_messages
+          div.message-container
+            h5 #{message.title}
+            p #{message.text}
+            span.message-info
+              p #{message.user.username}
+              p #{message.timestamp}
 
     else
       each message in user_messages
-        h5 #{message.title}
-        p #{message.text}
-        p Hidden
+        div.message-container
+          h5 #{message.title}
+          p #{message.text}
+          span.message-info
+            p User: Hidden
+            p Date: Hidden
   

@@ -4,26 +4,23 @@ block content
 
   if user
 
-    if pass_result = true
-      h5 Join the Club! 
-      
-      h6 Correct! You're in the club
+    if user.membership == 'full'
+      h5 Club Status
 
-    if pass_result = false 
-      h5 Join the Club! 
+      if message
+        p Congratulations you now have full membership
+      p You're in the club
 
-      h6 Sorry that is not the right word
+    if user.membership == 'partial'
+      h5 Club Status
+
+      p Join the Club
+
+      if message 
+        p Sorry, that is not the secret word
       form(method='POST' action='')
-        p What is the secret word?
-        input(type='text')
-        input(type='submit')
-
-    else
-      h5 Join the Club! 
-
-      form(method='POST' action='')
-        p What is the secret word?
-        input(type='text')
+        label(for='secret_word') What is the secret word?
+        input(type='text' name='secret_word')
         input(type='submit')
 
   else

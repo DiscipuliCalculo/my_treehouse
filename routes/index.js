@@ -19,40 +19,20 @@ router.post("/login/password", (req, res, next) => {
   })(req, res, next);
 });
 
-/*
-router.post('/login/password', (req, res, next) =>passport.authenticate('local', {
-  successReturnToOrRedirect: '/',
-  failureRedirect: '/login',
-  failureMessage: true
-}));
-*/
-
-// Current route work around for login
-/*
-router.post('/login/attempt', passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: '/login'
-}));
-*/
-
-//Using this route hangs the code
-/*
-router.post('/login', user_controller.login_form_post)
-*/
-
 router.get('/signup', user_controller.signup_form_get)
 
 router.post('/signup', user_controller.signup_form_post)
 
 router.get('/joinclub', user_controller.join_form_get)
 
-router.post('/joinclub', )
+router.post('/joinclub', user_controller.join_form_post)
 
 router.get("/logout", user_controller.logout_get)
 
 router.get('/new_message', message_controller.message_form_get)
 
 router.post('/new_message', message_controller.message_form_post)
+
 
 
 module.exports = router;

@@ -9,27 +9,21 @@ exports.login_form_get = function(req, res) {
   res.render('login', {title: 'Login', user: req.user, message: req.flash('error')});
 }
 
-// Using this code for login hangs the code 
-/*
-exports.login_form_post = function(req, res) {
-  passport.authenticate("local", 
-  {
-  successRedirect: "/",
-  failureRedirect: "/login"
-  })
-}
-*/
-
 exports.join_form_get = function(req, res) {
-  res.render('join_club', {title: 'Join', user: req.user});
+  res.render('join_club', {title: 'Join', user: req.user });
 }
 
 exports.join_form_post = function(req, res) {
-  if ( req.body.text === process.env.CLUB_PASS) {
-    res.render('join_club', {title: 'Join', user: req.user, pass_result: true});
+  if ( req.body.secret_word === process.env.CLUB_PASS) {
+    User.findByIdAndUpdate(req.user.id, {membership: 'full'}, function(err, result) {
+      if (err) {return next(err)}
+      else {
+        res.redirect('/joinclub')
+      }
+    })
   }
   else {
-    res.render('join_club', {title: 'Join', user: req.user, pass_result: false});
+    res.render('join_club', {title: 'Join', user: req.user, message: req.flash('fail')});
   }
 }
 
@@ -87,6 +81,21 @@ exports.signup_form_post = [
     })
   }
 ]
+
+
+exports.admin_confirm = function(req, res, next) {
+  if (req.body.admin_password === process.env.ADMIN_PASS) {
+    User.findByIdAndUpdate(req.user.id, {admin: true}, function(err, result) {
+      if (err) {return next(err)}
+      else {
+        res.redirect(result.url)
+      }
+    })
+  }
+  else {
+    res.render('account', {title: 'Account', user: req.user, message: req.flash('Wrong password')})
+  }
+}
 
 exports.logout_get = function(req, res) {
   req.logout();

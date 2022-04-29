@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h3 #{title}
+  if user
+    h5 #{user.username}
+    p #{user.firstname} #{user.lastname}
+
+    if user.admin == true
+      p Admin 
+    else 
+      p Standard user
+
+    form(method='POST' action='')
+      label(for='admin_password') Admin Password: 
+      input(name='admin_password' type='text')
+      if message
+        p Wrong password sucka
+      input(type='submit' value='Submit')
+  else 
+    p You are not logged in

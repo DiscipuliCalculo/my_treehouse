@@ -4,18 +4,20 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    nav.navbar
-      div
-        h3 Treehouse
-        if user
-          a(class='navlink' href='/') Home
-          a(class='navlink' href='/new_message') New Message
-          a(class='navlink' href='/joinclub') Enter Club
-          a(class='navlink' href='/logout') Logout
+    div
+      nav.navbar
+        div
+          h3 Treehouse
+          if user
+            a(class='navlink' href='/') Home
+            a(class='navlink' href='/new_message') New Message
+            a(class='navlink' href='/joinclub') Enter Club
+            a(class='navlink' href=user.url) Account
+            a(class='navlink' href='/logout') Logout
 
-        else
-          a(class='navlink' href='/') Home
-          a(class='navlink' href='/signup') Signup
-          a(class='navlink' href='/login') Login
+          else
+            a(class='navlink' href='/') Home
+            a(class='navlink' href='/signup') Signup
+            a(class='navlink' href='/login') Login
 
-    block content
+      block content
